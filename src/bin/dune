@@ -1,0 +1,7 @@
+(executables
+ (names main)
+ (libraries dpt))
+
+(install
+ (section bin)
+ (files (main.exe as dpt)))
