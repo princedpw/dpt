@@ -1,5 +1,4 @@
-# dpt
-Data plane threads
+# dpt -- Data Plane Threads
 
 You can see which ocaml packages you're missing to run nv using dune:
 
