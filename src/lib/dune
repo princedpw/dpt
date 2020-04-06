@@ -1,3 +1,6 @@
 (library
  (name dpt)
- (public_name dpt))
+ (public_name dpt)
+ (preprocess
+    (pps ppx_deriving.std ppx_deriving_argparse))
+)
