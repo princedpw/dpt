@@ -1,3 +1,7 @@
-let interp_exp e = print_endline "interpreting exp!"
+let interp_exp e =
+  let _ = e in
+  print_endline "interpreting exp!"
 
-let interp_decls ds = print_endline "interpreting decls!"
+let interp_decls ds =
+  let _ = ds in
+  print_endline "interpreting decls!"

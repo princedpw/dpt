@@ -1,6 +1,8 @@
 (library
  (name dpt)
  (public_name dpt)
+ (libraries
+   batteries)
  (preprocess
     (pps ppx_deriving.std ppx_deriving_argparse))
 )
