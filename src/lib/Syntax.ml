@@ -73,6 +73,6 @@ let value_sp v span = {v; vspan=span}
 let decl_sp d span = {d; dspan=span}
                    
 
-let vint_sp i span = value_sp (VInt i) (span)
+let vint_sp i span = value_sp (VInt i) span
 
-let value_to_exp v = exp_sp (EVal v) (v.vspan)
+let value_to_exp v = exp_sp (EVal v) v.vspan

@@ -10,6 +10,7 @@
 %token <Span.t> FALSE
 %token <Span.t> EQ
 %token <Span.t> LESS
+%token <Span.t> PLUS
 %token <Span.t> IF
 %token <Span.t> THEN
 %token <Span.t> ELSE
@@ -40,10 +41,10 @@
 %%
 
 exp:
-    | NUM                               { value_to_exp (vint (snd $1) (fst $1)) }
+    | NUM                               { value_to_exp (vint_sp (snd $1) (fst $1)) }
 
 decl:
-    | PRINTI exp SEMI                   { decl (DPrinti $2, Span.extend $1 $3) }
+    | PRINTI exp SEMI                   { decl_sp (DPrinti $2) (Span.extend $1 $3) }
 
 decls:
     | decl                              { [$1] }

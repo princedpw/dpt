@@ -36,11 +36,10 @@ rule token = parse
   | "event"           { TEVENT (position lexbuf) }
   | "printi"	      { PRINTI (position lexbuf) }
   | id as s           { ID (position lexbuf, Var.create s) }
-  | node as s         { NODE (position lexbuf, int_of_string (String.rchop ~n:1 s)) }
   | num as n          { NUM (position lexbuf, int_of_string n) }
-  | "+"               { PLUS (position lexbuf, 32) }
+  | "+"               { PLUS (position lexbuf) }
   | "="               { EQ (position lexbuf) }
-  | "<"               { LESS (position lexbuf, 32) }
+  | "<"               { LESS (position lexbuf) }
   | ";"               { SEMI (position lexbuf) }
   | "("               { LPAREN (position lexbuf) }
   | ")"               { RPAREN (position lexbuf) }

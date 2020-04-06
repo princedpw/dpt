@@ -6,3 +6,11 @@
  (preprocess
     (pps ppx_deriving.std ppx_deriving_argparse))
 )
+
+(menhir
+  (modules Parser))
+
+(ocamllex
+  (modules Lexer))
+
+(include_subdirs unqualified)
