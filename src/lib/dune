@@ -2,7 +2,18 @@
  (name dpt)
  (public_name dpt)
  (libraries
-   batteries)
+   batteries
+   ANSITerminal)
+ (modules
+   console
+   foo
+   input
+   interp
+   span
+   syntax
+   var
+   parser
+   lexer)  
  (preprocess
     (pps ppx_deriving.std ppx_deriving_argparse))
 )

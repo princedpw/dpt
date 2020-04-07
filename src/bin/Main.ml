@@ -1,14 +1,15 @@
 open Batteries
+open Dpt
 
 let report s = print_endline s
 
-let main () =
+let main () = (* report s1; report s2 *)
   let filename = Sys.argv.(1) in
   report "Parsing ...";
-  let ds = Dpt.Input.parse filename in
+  let ds = Input.parse filename in
   report "Interpreting...";
-  let _ = Dpt.Interp.inter_decls ds in
-  report "Done"
+  let _ = Interp.interp_decls ds in
+  report "Done" 
 
 let _ = main ()
 
