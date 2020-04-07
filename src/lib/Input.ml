@@ -10,19 +10,18 @@ let read ?(filename : string option = None) lexbuf =
   in
   let err_header =
     match filename with
-    | None -> "[Parser]"
-    | Some s -> Printf.sprintf "[Parser] %s:" s
+    | None -> Console.error (Printf.sprintf "[Parser]")
+    | Some s -> Console.error (Printf.sprintf "[Parser] %s:" s)
   in
   try Parser.prog Lexer.token lexbuf with
   | Failure x -> Console.error (Printf.sprintf "%s %s" err_header x)
   | End_of_file -> Console.error (Printf.sprintf "%s end of file in comment" err_header)
   | _ ->
     let tok, line, cnum = get_info () in
-    let msg =
-      Printf.sprintf "%s token: %s, line: %s, char: %s" err_header tok
-        (string_of_int line) (string_of_int cnum)
-    in
-    print_endline msg
+    Console.error (
+        Printf.sprintf "%s token: %s, line: %s, char: %s" err_header tok
+          (string_of_int line) (string_of_int cnum)
+      )
 
 let read_from_file fname =
   let fin = open_in fname in
