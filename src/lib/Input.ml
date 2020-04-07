@@ -1,5 +1,7 @@
 open Batteries
 
+let debug s = print_endline s
+
 let read ?(filename : string option = None) lexbuf =
   let get_info () =
     let curr = lexbuf.Lexing.lex_curr_p in
@@ -10,11 +12,11 @@ let read ?(filename : string option = None) lexbuf =
   in
   let err_header =
     match filename with
-    | None -> Console.error (Printf.sprintf "[Parser]")
-    | Some s -> Console.error (Printf.sprintf "[Parser] %s:" s)
+    | None -> Printf.sprintf "[Parser]"
+    | Some s -> Printf.sprintf "[Parser] %s:" s
   in
   try Parser.prog Lexer.token lexbuf with
-  | Failure x -> Console.error (Printf.sprintf "%s %s" err_header x)
+  | Failure x -> Console.error (Printf.sprintf "%s %s" err_header x) 
   | End_of_file -> Console.error (Printf.sprintf "%s end of file in comment" err_header)
   | _ ->
     let tok, line, cnum = get_info () in
