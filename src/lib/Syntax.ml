@@ -1,6 +1,6 @@
 (* Abstract syntax of DPT *)
 
-type var = Var.t
+type id = Id.t
 
 type ty =
   | TBool

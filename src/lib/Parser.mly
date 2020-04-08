@@ -4,7 +4,7 @@
 
 %}
 
-%token <Span.t * Var.t> ID
+%token <Span.t * Id.t> ID
 %token <Span.t * int> NUM
 %token <Span.t> TRUE
 %token <Span.t> FALSE

@@ -10,16 +10,16 @@ val reset : unit -> unit
 
 val name : t -> string
 
-val to_var : string * int -> t
+val to_id : string * int -> t
 
-val from_var : t -> string * int
+val from_id : t -> string * int
 
 val to_string : t -> string
 
 val to_string_delim : string -> t -> string
 
 (* Inverse of to_string. Do not use for other values. *)
-val of_var_string : string -> t
+val of_id_string : string -> t
 
 val equal : t -> t -> bool
 

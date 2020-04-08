@@ -35,7 +35,7 @@ rule token = parse
   | "bool"            { TBOOL (position lexbuf) }
   | "event"           { TEVENT (position lexbuf) }
   | "printi"	      { PRINTI (position lexbuf) }
-  | id as s           { ID (position lexbuf, Var.create s) }
+  | id as s           { ID (position lexbuf, Id.create s) }
   | num as n          { NUM (position lexbuf, int_of_string n) }
   | "+"               { PLUS (position lexbuf) }
   | "="               { EQ (position lexbuf) }

@@ -6,13 +6,12 @@
    ANSITerminal)
  (modules
    console
-   foo
+   id
    input
    interp
    printing
    span
    syntax
-   var
    parser
    lexer)  
  (preprocess

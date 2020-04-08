@@ -17,15 +17,15 @@ let create s = (s, 0)
 
 let name (s, _) = s
 
-let to_var (s, i) = (s, i)
+let to_id (s, i) = (s, i)
 
-let from_var (s, i) = (s, i)
+let from_id (s, i) = (s, i)
 
 let to_string (s, i) = s ^ delim ^ string_of_int i
 
 let to_string_delim d (s, i) = s ^ d ^ string_of_int i
 
-let of_var_string s =
+let of_id_string s =
   try
     let v, i = BatString.rsplit s ~by:"~" in
     (v, int_of_string i)
