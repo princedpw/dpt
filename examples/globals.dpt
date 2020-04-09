@@ -1,0 +1,4 @@
+int i = 3; 
+printi i + i;
+printi 2;
+printi i;

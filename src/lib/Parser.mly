@@ -11,6 +11,7 @@
 %token <Span.t> EQ
 %token <Span.t> LESS
 %token <Span.t> PLUS
+%token <Span.t> ASSIGN
 %token <Span.t> IF
 %token <Span.t> THEN
 %token <Span.t> ELSE
@@ -40,11 +41,23 @@
 
 %%
 
+ty:
+    | TINT				{ ty_sp TInt $1 }
+    | TBOOL				{ ty_sp TBool $1 }
+    | TEVENT LBRACKET tylist RBRACKET   { ty_sp (TEvent $3) (Span.extend $1 $4) }
+
+tylist:
+    | ty				{ [ $1 ] }
+    | ty COMMA tylist			{ $1::$3 }
+
 exp:
+    | ID				{ exp_sp (EVar (snd $1)) (fst $1) }
     | NUM                               { value_to_exp (vint_sp (snd $1) (fst $1)) }
+    | exp PLUS exp      		{ exp_sp (EOp(Plus, [$1; $3])) (Span.extend $1.espan $3.espan) }
 
 decl:
     | PRINTI exp SEMI                   { decl_sp (DPrinti $2) (Span.extend $1 $3) }
+    | ty ID ASSIGN exp SEMI		{ decl_sp (DVar (snd $2, $1, $4)) (Span.extend $1.tspan $5) } 
 
 decls:
     | decl                              { [$1] }

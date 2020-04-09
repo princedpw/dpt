@@ -8,7 +8,7 @@ let main () = (* report s1; report s2 *)
   report "Parsing ...";
   let ds = Input.parse filename in
   report "Interpreting...";
-  let _ = Interp.interp_decls ds in
+  let _ = Interp.interp ds in
   report "Done" 
 
 let _ = main ()

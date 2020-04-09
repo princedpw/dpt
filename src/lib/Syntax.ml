@@ -2,10 +2,12 @@
 
 type id = Id.t
 
-type ty =
+type t =
   | TBool
   | TInt
   | TEvent of ty list
+            
+and ty = {t:t; tspan: Span.t}
 
 type op =
   | And
@@ -19,14 +21,15 @@ type op =
 type v =
   | VBool of bool
   | VInt of int
-  | VEvent of v list
+  | VEvent of id * value list
 
 (* value with meta data *)
 and value = {v: v; vspan: Span.t;}
 
 (* expression *)
-and e =
+type e =
   | EVal of value
+  | EVar of id
   | EOp of op * exp list
 
 (* expression with meta data *)
@@ -35,6 +38,7 @@ and exp = {e: e; espan: Span.t;}
 (* declaration *)
 type d =
   | DPrinti of exp
+  | DVar of id * ty * exp
 
 (* declaration with meta data *)
 and decl = {d: d; dspan: Span.t;}
@@ -46,6 +50,10 @@ type decls = decl list
            
 (* Constructors *)
 
+(* types *)
+let ty_sp t span = {t; tspan=span;}
+let ty t = {t; tspan=Span.default;}
+         
 (* values *)
 let value_sp v span = {v; vspan=span;}
 let value v = {v; vspan= Span.default;}

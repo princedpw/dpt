@@ -9,6 +9,14 @@ let rec sep s f xs =
 
 let comma_sep f xs = sep "," f xs
 
+let rec t_to_string t =
+  match t with
+  | TBool -> "bool"
+  | TInt -> "int"
+  | TEvent tys -> "event[" ^ comma_sep ty_to_string tys ^ "]"
+               
+and ty_to_string t = t_to_string t.t
+                   
 let op_to_string op =
   match op with
   | And -> "&&"
@@ -29,7 +37,8 @@ and value_to_string v = v_to_string v.v
   
 let rec e_to_string e =
   match e with
-  | EVal v -> v_to_string v.v 
+  | EVal v -> v_to_string v.v
+  | EVar id -> Id.to_string id
   | EOp (op, [e]) -> op_to_string op ^ exp_to_string e
   | EOp (op, [e1;e2]) -> exp_to_string e1 ^ op_to_string op ^ exp_to_string e2
   | EOp (op, es) -> error ("wrong number of arguments (" ^
@@ -41,6 +50,7 @@ and exp_to_string e = e_to_string e.e
 let rec d_to_string d =
   match d with
   | DPrinti e -> "printi " ^ exp_to_string e ^ ";"
+  | DVar (id, ty, e) -> Id.to_string id ^ " : " ^ ty_to_string ty ^ " = " ^ exp_to_string e
              
 and decl_to_string d = d_to_string d.d 
   

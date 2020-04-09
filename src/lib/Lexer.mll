@@ -38,11 +38,12 @@ rule token = parse
   | id as s           { ID (position lexbuf, Id.create s) }
   | num as n          { NUM (position lexbuf, int_of_string n) }
   | "+"               { PLUS (position lexbuf) }
-  | "="               { EQ (position lexbuf) }
+  | "=="              { EQ (position lexbuf) }
   | "<"               { LESS (position lexbuf) }
   | ";"               { SEMI (position lexbuf) }
   | "("               { LPAREN (position lexbuf) }
   | ")"               { RPAREN (position lexbuf) }
+  | "="               { ASSIGN (position lexbuf) } 
   | "{"               { LBRACE (position lexbuf) }
   | "}"               { RBRACE (position lexbuf) }
   | wspace            { token lexbuf }
