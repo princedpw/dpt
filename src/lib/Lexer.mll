@@ -29,12 +29,12 @@ rule token = parse
   | "false"           { FALSE (position lexbuf) }
   | "true"            { TRUE (position lexbuf) }
   | "if"              { IF (position lexbuf) }
-  | "then"            { THEN (position lexbuf) }
   | "else"            { ELSE (position lexbuf) }
   | "int"             { TINT (position lexbuf) }
   | "bool"            { TBOOL (position lexbuf) }
   | "event"           { TEVENT (position lexbuf) }
   | "printi"	      { PRINTI (position lexbuf) }
+  | "handle"	      { HANDLE (position lexbuf) }
   | id as s           { ID (position lexbuf, Id.create s) }
   | num as n          { NUM (position lexbuf, int_of_string n) }
   | "+"               { PLUS (position lexbuf) }
@@ -46,6 +46,7 @@ rule token = parse
   | "="               { ASSIGN (position lexbuf) } 
   | "{"               { LBRACE (position lexbuf) }
   | "}"               { RBRACE (position lexbuf) }
+  | ","               { COMMA (position lexbuf) }
   | wspace            { token lexbuf }
   | '\n'              { incr_linenum lexbuf; token lexbuf}
   | _ as c            { printf "[Parse Error] Unrecognized character: %c\n" c; token lexbuf }

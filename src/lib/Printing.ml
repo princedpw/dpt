@@ -26,6 +26,9 @@ let op_to_string op =
   | Less -> "<"
   | Plus -> "+"
 
+let packet_to_string p =
+  "{src=" ^ string_of_int (src p) ^ "; dst=" ^ string_of_int (dst p) ^ "}" 
+
 let rec v_to_string v =
   match v with
   | VBool true -> "true"
@@ -49,8 +52,11 @@ and exp_to_string e = e_to_string e.e
 
 let rec d_to_string d =
   match d with
-  | DPrinti e -> "printi " ^ exp_to_string e ^ ";"
-  | DVar (id, ty, e) -> Id.to_string id ^ " : " ^ ty_to_string ty ^ " = " ^ exp_to_string e
+  | DPrinti e -> "printi " ^ exp_to_string e ^ ";\n"
+  | DVar (id, ty, e) -> ty_to_string ty ^ " " ^ Id.to_string id ^  " = " ^ exp_to_string e ^ ";\n"
+  | DHandler (id, (params, s)) ->
+     let _,_ = params, s in
+     "handle " ^ Id.to_string id ^ " ... " (* TODO *)
              
 and decl_to_string d = d_to_string d.d 
   

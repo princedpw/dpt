@@ -12,6 +12,7 @@
    printing
    span
    syntax
+   packetSource
    parser
    lexer)  
  (preprocess

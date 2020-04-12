@@ -1,0 +1,7 @@
+int i = 10000;
+
+handle PacketIn (int src, int dst) {
+  printi src;
+  printi dst;
+  printi i;
+}

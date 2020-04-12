@@ -12,3 +12,5 @@ let error msg =
   raise (Error msg)
 
 let warning msg = show_message msg T.Yellow "warning"
+
+let report msg = show_message msg T.Black "dpt"
