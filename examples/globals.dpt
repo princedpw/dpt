@@ -1,4 +1,4 @@
 int i = 3; 
-printi i + i;
-printi 2;
-printi i;
+report_int i + i;
+report_int 2;
+report_int i;

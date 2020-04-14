@@ -1,2 +1,2 @@
-printi 0 + 1;
-printi 2;
+report_int 0 + 1;
+report_int 2;

@@ -15,6 +15,9 @@
       { pos with Lexing.pos_lnum = pos.Lexing.pos_lnum + 1;
                  Lexing.pos_bol = pos.Lexing.pos_cnum; } ;;
 
+  let extract_string s =
+    let len = String.length s in
+    String.sub s 1 (len-2)
 }
 
 let id = ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '_' '0'-'9']*
@@ -23,6 +26,7 @@ let num = ['0'-'9']+
 let tid = ['\'']['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '_' '0'-'9']*
 let wspace = [' ' '\t']
 let filename = "\""(['a'-'z' 'A'-'Z' '0'-'9' '_' '\\' '/' '.' '-'])+"\""
+let str = "\""['a'-'z' 'A'-'Z' '_' '0'-'9' '~' '!' '@' '#' '$' '%' '^' '&' '|' ':' '?' '>' '<' '[' ']' '=' '-' '.' ' ']*"\""
 
 rule token = parse
   | "(*"              { comments 0 lexbuf }
@@ -33,11 +37,15 @@ rule token = parse
   | "int"             { TINT (position lexbuf) }
   | "bool"            { TBOOL (position lexbuf) }
   | "event"           { TEVENT (position lexbuf) }
-  | "printi"	      { PRINTI (position lexbuf) }
+  | "report_int"      { REPORTI (position lexbuf) }
+  | "report_string"   { REPORTS (position lexbuf) }
   | "handle"	      { HANDLE (position lexbuf) }
   | id as s           { ID (position lexbuf, Id.create s) }
   | num as n          { NUM (position lexbuf, int_of_string n) }
   | "+"               { PLUS (position lexbuf) }
+  | "!"               { NOT (position lexbuf) }
+  | "&&"              { AND (position lexbuf) }
+  | "||"              { OR (position lexbuf) }
   | "=="              { EQ (position lexbuf) }
   | "<"               { LESS (position lexbuf) }
   | ";"               { SEMI (position lexbuf) }
@@ -49,6 +57,7 @@ rule token = parse
   | ","               { COMMA (position lexbuf) }
   | wspace            { token lexbuf }
   | '\n'              { incr_linenum lexbuf; token lexbuf}
+  | str as s          { STRING (position lexbuf, extract_string s) }
   | _ as c            { printf "[Parse Error] Unrecognized character: %c\n" c; token lexbuf }
   | eof		            { EOF }
 

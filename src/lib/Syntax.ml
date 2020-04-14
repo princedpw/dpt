@@ -40,6 +40,7 @@ type s =
   | SNoop
   | SAssign of id * exp
   | SPrinti of exp
+  | SPrints of string
   | SIf of exp * statement * statement
   | SSeq of statement * statement
 and statement = {s:s; sspan:Span.t;}        
@@ -51,6 +52,7 @@ type body = params * statement
 (* declarations *)
 type d =
   | DPrinti of exp
+  | DPrints of string
   | DVar of id * ty * exp
   | DHandler of id * body
 and decl = {d: d; dspan: Span.t;}
@@ -132,11 +134,14 @@ let snoop = statement SNoop
 let sseq s1 s2 = statement (SSeq (s1, s2))
 let sassign id e = statement (SAssign (id, e))
 let sprinti e = statement (SPrinti e)
+let sprints s = statement (SPrints s)
 let sifte e s1 s2 = statement (SIf (e, s1, s2))
 
 let snoop_sp span = statement_sp SNoop span
 let sassign_sp id e span = statement_sp (SAssign (id, e)) span
 let sseq_sp s1 s2 span = statement_sp (SSeq (s1, s2)) span
 let sprinti_sp e span = statement_sp (SPrinti e) span
+let sprints_sp s span = statement_sp (SPrints s) span
+                      
 let sifte_sp e s1 s2 span = statement_sp (SIf (e, s1, s2)) span
 

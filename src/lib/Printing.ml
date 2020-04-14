@@ -52,7 +52,8 @@ and exp_to_string e = e_to_string e.e
 
 let rec d_to_string d =
   match d with
-  | DPrinti e -> "printi " ^ exp_to_string e ^ ";\n"
+  | DPrinti e -> "report_int " ^ exp_to_string e ^ ";\n"
+  | DPrints s -> "report_string " ^ s ^ ";\n"
   | DVar (id, ty, e) -> ty_to_string ty ^ " " ^ Id.to_string id ^  " = " ^ exp_to_string e ^ ";\n"
   | DHandler (id, (params, s)) ->
      let _,_ = params, s in

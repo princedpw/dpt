@@ -112,6 +112,11 @@ let rec interp_statement st s =
        print_endline (string_of_int (raw_int v));
        st
      end
+  | SPrints s ->
+     begin
+       print_endline s;
+       st
+     end
   | SIf (e, ss1, ss2) ->
      let v = interp_exp st e in
      if raw_bool v then
@@ -128,6 +133,11 @@ let interp_decl st d =
      begin
        let v = interp_exp st e in
        print_endline (string_of_int (raw_int v));
+       st
+     end
+  | DPrints s ->
+     begin
+       print_endline s;
        st
      end
   | DVar (id, _, e) ->
