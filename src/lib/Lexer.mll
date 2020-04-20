@@ -21,6 +21,7 @@
 }
 
 let id = ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '_' '0'-'9']*
+let gid = ['A'-'Z']['a'-'z' 'A'-'Z' '_' '0'-'9']*
 let symbol = ['~' '`' '!' '@' '#' '$' '%' '^' '&' '|' ':' '?' '>' '<' '[' ']' '=' '-' '.']+
 let num = ['0'-'9']+
 let tid = ['\'']['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '_' '0'-'9']*
@@ -41,6 +42,7 @@ rule token = parse
   | "report_string"   { REPORTS (position lexbuf) }
   | "handle"	      { HANDLE (position lexbuf) }
   | id as s           { ID (position lexbuf, Id.create s) }
+  | gid as s          { GID (position lexbuf, Id.create s) }	
   | num as n          { NUM (position lexbuf, int_of_string n) }
   | "+"               { PLUS (position lexbuf) }
   | "!"               { NOT (position lexbuf) }
@@ -55,6 +57,7 @@ rule token = parse
   | "{"               { LBRACE (position lexbuf) }
   | "}"               { RBRACE (position lexbuf) }
   | ","               { COMMA (position lexbuf) }
+  | "."               { DOT (position lexbuf) }
   | wspace            { token lexbuf }
   | '\n'              { incr_linenum lexbuf; token lexbuf}
   | str as s          { STRING (position lexbuf, extract_string s) }

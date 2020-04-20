@@ -4,7 +4,7 @@ bool done = false;
 
 report_string "start";
 
-handle PacketIn (int src, int dst) {
+handle packetin (int src, int dst) {
   if (!done) { 
     if (count < 10) {
       report_int count;

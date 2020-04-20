@@ -1,6 +1,6 @@
 int i = 10000;
 
-handle PacketIn (int src, int dst) {
+handle packetin (int src, int dst) {
   report_int src;
   report_int dst;
   report_int i;
