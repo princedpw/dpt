@@ -22,7 +22,7 @@ type op =
 (* values *)
 type v =
   | VBool of bool
-  | VInt of int
+  | VInt of Integer.t
   | VEvent of event
   | VObj of id * cid  (* VObj (kind of object, pointer to state) *) 
 
@@ -80,14 +80,15 @@ let ty t = {t; tspan=Span.default;}
 let value_sp v span = {v; vspan=span;}
 let value v = {v; vspan= Span.default;}
             
-let vint i = value (VInt i)
+let vint i = value (VInt (Integer.of_int i))
+let vinteger i = value (VInt i)
 let vbool b = value (VBool b)
 let vobj class_id objid = value (VObj (class_id, objid))
 
 let vint_sp i span = value_sp (VInt i) span
 let vbool_sp b span = value_sp (VBool b) span
 
-let raw_int v =
+let raw_integer v =
   match v.v with
     VInt i -> i
   | _ -> error "not integer"
@@ -103,16 +104,16 @@ let raw_bool v =
 type packet = value list
        
 let packet src dst =
-  [vint src; vint dst]
+  [vinteger src; vinteger dst]
                    
 let src p =
   match p with
-  | [src; _] -> raw_int src
+  | [src; _] -> raw_integer src
   | _ -> error "bad packet; wrong number of values"
        
 let dst p =
   match p with
-  | [_; dst] -> raw_int dst
+  | [_; dst] -> raw_integer dst
   | _ -> error "bad packet; wrong number of values"
 
 (* packet_in event name *)

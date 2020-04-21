@@ -155,7 +155,7 @@ let counter_add_fun st vs =
        match State.lookup objid st with
        | V {v=VInt current; vspan=_} ->
           begin
-            let res = vint (current + i) in
+            let res = vinteger (Integer.add current i) in
             let st = State.update objid res st in
             (res, st)
           end
@@ -185,9 +185,9 @@ let interp_op op vs =
   | And, [v1;v2] -> vbool (raw_bool v1 && raw_bool v2)
   | Or, [v1;v2] -> vbool (raw_bool v1 || raw_bool v2)
   | Not, [v] -> vbool (not (raw_bool v))
-  | Eq, [v1;v2] -> vbool (raw_int v1 = raw_int v2)
-  | Less, [v1;v2] -> vbool (raw_int v1 < raw_int v2)
-  | Plus, [v1;v2] -> vint (raw_int v1 + raw_int v2)
+  | Eq, [v1;v2] -> vbool (Integer.equal (raw_integer v1) (raw_integer v2))
+  | Less, [v1;v2] -> vbool (Integer.lt (raw_integer v1) (raw_integer v2))
+  | Plus, [v1;v2] -> vinteger (Integer.add (raw_integer v1) (raw_integer v2))
   | _ -> error ("bad operator: " ^ Printing.op_to_string op
                 ^ " with " ^ string_of_int (List.length vs) ^ " arguments")
 
@@ -239,7 +239,7 @@ let rec interp_statement st s =
   | SPrinti e ->
      begin
        let v, st = interp_exp st e in
-       print_endline (string_of_int (raw_int v));
+       print_endline (Integer.to_string (raw_integer v));
        st
      end
   | SPrints s ->
@@ -262,7 +262,7 @@ let interp_decl st d =
   | DPrinti e ->
      begin
        let v, st = interp_exp st e in
-       print_endline (string_of_int (raw_int v));
+       print_endline (Integer.to_string (raw_integer v));
        st
      end
   | DPrints s ->

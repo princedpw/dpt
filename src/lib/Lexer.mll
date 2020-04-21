@@ -18,13 +18,16 @@
   let extract_string s =
     let len = String.length s in
     String.sub s 1 (len-2)
+
+  let extract_size_from_int s =
+    int_of_string (String.sub s 3 ((String.length s) - 1))
 }
 
 let id = ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '_' '0'-'9']*
-let gid = ['A'-'Z']['a'-'z' 'A'-'Z' '_' '0'-'9']*
 let symbol = ['~' '`' '!' '@' '#' '$' '%' '^' '&' '|' ':' '?' '>' '<' '[' ']' '=' '-' '.']+
 let num = ['0'-'9']+
 let tid = ['\'']['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '_' '0'-'9']*
+let intty = "int"['1'-'9']['0'-'9']*
 let wspace = [' ' '\t']
 let filename = "\""(['a'-'z' 'A'-'Z' '0'-'9' '_' '\\' '/' '.' '-'])+"\""
 let str = "\""['a'-'z' 'A'-'Z' '_' '0'-'9' '~' '!' '@' '#' '$' '%' '^' '&' '|' ':' '?' '>' '<' '[' ']' '=' '-' '.' ' ']*"\""
@@ -35,15 +38,15 @@ rule token = parse
   | "true"            { TRUE (position lexbuf) }
   | "if"              { IF (position lexbuf) }
   | "else"            { ELSE (position lexbuf) }
-  | "int"             { TINT (position lexbuf) }
+  | "int"             { TINT (position lexbuf, 32) }
+  | intty as t        { TINT (position lexbuf, extract_size_from_int t) }
   | "bool"            { TBOOL (position lexbuf) }
   | "event"           { TEVENT (position lexbuf) }
   | "report_int"      { REPORTI (position lexbuf) }
   | "report_string"   { REPORTS (position lexbuf) }
   | "handle"	      { HANDLE (position lexbuf) }
-  | id as s           { ID (position lexbuf, Id.create s) }
-  | gid as s          { GID (position lexbuf, Id.create s) }	
-  | num as n          { NUM (position lexbuf, int_of_string n) }
+  | id as s           { ID (position lexbuf, Id.create s) }	
+  | num as n          { NUM (position lexbuf, Integer.of_int (int_of_string n)) }
   | "+"               { PLUS (position lexbuf) }
   | "!"               { NOT (position lexbuf) }
   | "&&"              { AND (position lexbuf) }

@@ -12,7 +12,7 @@ let comma_sep f xs = sep "," f xs
 let rec t_to_string t =
   match t with
   | TBool -> "bool"
-  | TInt -> "int"
+  | TInt i -> "int" ^ string_of_int i
   | TId id -> Id.to_string id
   | TEvent tys -> "event[" ^ comma_sep ty_to_string tys ^ "]"
                
@@ -28,13 +28,13 @@ let op_to_string op =
   | Plus -> "+"
 
 let packet_to_string p =
-  "{src=" ^ string_of_int (src p) ^ "; dst=" ^ string_of_int (dst p) ^ "}" 
+  "{src=" ^ Integer.to_string (src p) ^ "; dst=" ^ Integer.to_string (dst p) ^ "}" 
 
 let rec v_to_string v =
   match v with
   | VBool true -> "true"
   | VBool false -> "false"
-  | VInt i -> string_of_int i
+  | VInt i -> Integer.to_string i
   | VObj (id, cid) -> Id.to_string id ^ "." ^ Cid.to_string cid
   | VEvent _ -> failwith "unimplemented vevent printer"
                

@@ -6,9 +6,9 @@ let process_line line =
   | [s1; s2] ->
      begin
        try
-         let i1 = int_of_string s1 in
-         let i2 = int_of_string s2 in
-         Some [Syntax.vint i1; Syntax.vint i2;]
+         let i1 = Integer.of_string s1 in
+         let i2 = Integer.of_string s2 in
+         Some [Syntax.vinteger i1; Syntax.vinteger i2;]
        with
          _ -> error ()
      end

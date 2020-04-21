@@ -5,7 +5,6 @@
 %}
 
 %token <Span.t * Id.t> ID
-%token <Span.t * Id.t> GID
 %token <Span.t * Integer.t> NUM
 %token <Span.t * string> STRING
 %token <Span.t> TRUE
@@ -33,7 +32,7 @@
 %token <Span.t> DOT
 %token <Span.t> TBOOL
 %token <Span.t> TEVENT
-%token <Span.t> TINT
+%token <Span.t * int> TINT
 
 
 %token EOF
@@ -49,7 +48,7 @@
 %%
 
 ty:
-    | TINT				{ ty_sp (TInt 32) $1 }
+    | TINT				{ ty_sp (TInt (snd $1)) (fst $1) }
     | TBOOL				{ ty_sp TBool $1 }
     | ID				{ ty_sp (TId (snd $1)) (fst $1) }
     | TEVENT LBRACKET tylist RBRACKET   { ty_sp (TEvent $3) (Span.extend $1 $4) }
