@@ -13,7 +13,7 @@ let rec t_to_string t =
   match t with
   | TBool -> "bool"
   | TInt -> "int"
-  | TState id -> Id.to_string id
+  | TId id -> Id.to_string id
   | TEvent tys -> "event[" ^ comma_sep ty_to_string tys ^ "]"
                
 and ty_to_string t = t_to_string t.t

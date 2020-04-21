@@ -5,8 +5,8 @@ type cid = Cid.t
 
 type t =
   | TBool
-  | TInt
-  | TState of id
+  | TInt of int  (* size of integer *)
+  | TId of id
   | TEvent of ty list
             
 and ty = {t:t; tspan: Span.t}
