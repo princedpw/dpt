@@ -3,12 +3,14 @@
  (public_name dpt)
  (libraries
    batteries
+   zarith
    ANSITerminal)
  (modules
    console
    id
    cid
    input
+   integer
    interp
    printing
    span
